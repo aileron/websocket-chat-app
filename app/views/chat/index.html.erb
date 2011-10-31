@@ -1,0 +1,38 @@
+<script type="text/javascript">
+$(function(){ 
+  var ws = new WebSocket( '<%= "ws://#{request.host}:8081/" %>' );
+    ws.onopen= function(){};
+    ws.onclose = function(){};
+    ws.onmessage = function(e)
+    {
+      console.log(e.data);
+        var message = eval('(' + e.data + ')');
+        if(message.type=="notify")
+        {
+            return ;
+        }
+
+        var id = "message_" + message.uid;
+        var tag = $('#'+id);
+        if ( tag.length )
+        {
+            tag.html( message.name + "<pre>" + message.body + "</pre>" );
+        }
+        else
+        {
+            $( "#messages" ).append( "<li id='"+id+"'>"+ message.name+"<pre>"+message.body+"</pre></li>" );
+        }
+    };
+    $('#message').bind('keyup change', function()
+    {
+        var message = JSON.stringify( { name: $('#name').val(), body: $(this).val() } );
+        ws.send(message);
+    });
+});
+</script>
+
+<input id="name" type="text" /><br />
+<textarea id="message"></textarea>
+<ol id="messages">
+</ol>
+

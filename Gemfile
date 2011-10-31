@@ -1,0 +1,10 @@
+source 'http://rubygems.org'
+
+gem 'rails', '3.0.10'
+gem 'unicorn'
+#gem 'rev-websocket'
+gem 'em-websocket'
+gem 'jquery-rails'
+gem 'mongoid'
+gem 'bson_ext'
+gem 'pry'
